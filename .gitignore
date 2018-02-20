@@ -15,3 +15,4 @@ mvnw
 maven-wrapper.properties
 bin/
 
+/.apt_generated/

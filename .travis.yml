@@ -2,9 +2,22 @@ language: java
 group: stable
 jdk:
 - oraclejdk8
-script: mvn clean verify
-script: mvn checkstyle:checkstyle
-# git strips the wrapper jar file so we have to force its download during the build
+
+before_script:
+  # set up code climate test reporter
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+
+script:
+    - mvn clean verify
+    
 install:
 - mvn -N io.takari:maven:wrapper
 - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+after_success:
+  - cp target/site/jacoco/jacoco.xml src/main/java/jacoco.xml
+  - cd src/main/java/
+  - ../../../cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT
