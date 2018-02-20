@@ -2,6 +2,7 @@ package fetchbooks.springbootgraphql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 import org.junit.Test;
 
 public class FirstTest {
