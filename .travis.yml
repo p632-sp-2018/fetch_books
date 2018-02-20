@@ -16,6 +16,8 @@ script:
 install:
 - mvn -N io.takari:maven:wrapper
 - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+- mvn -e -X clean install -P create-jacoco-reports
+
 
 after_success:
   - cp target/site/jacoco/jacoco.xml src/main/java/jacoco.xml
